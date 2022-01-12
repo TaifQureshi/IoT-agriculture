@@ -1,14 +1,16 @@
 from twisted.internet import reactor
 from twisted.internet.protocol import ServerFactory as ServFactory
 from typing import Dict, Callable
-from iot_agriculture import get_logger, Connection
+from iot_agriculture import Connection
+import logging
 
 
-class ServerFactory(ServFactory):
-    def __init__(self, host: str, port: int, log_path: str, name: str, callbacks: dict):
+class TcpServer(ServFactory):
+    def __init__(self, host: str, port: int, log_path: str, name: str, callbacks: dict, *args, **kwargs):
+        super(TcpServer, self).__init__(*args, **kwargs)
         self.port = port
         self.name = name
-        self.logger = get_logger(log_path, name)
+        self.logger = logging.getLogger("tcp_server")
         self.callbacks: Dict[str, Callable] = callbacks
         self.listener = None
         self.host = host

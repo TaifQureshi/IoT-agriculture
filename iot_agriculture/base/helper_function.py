@@ -1,45 +1,32 @@
 import os
 import logging
 import yaml
+import sys
 
 
-def base_setting(setting='base_setting.yml') -> dict:
-    with open(f'config/{setting}', 'r') as file:
+def base_setting(base_path="config", setting='base_setting.yml') -> dict:
+    with open(os.path.join(base_path, setting), 'r') as file:
         documents = yaml.full_load(file)
 
     return documents
 
 
-def get_logger(path, name):
-    for handler in logging.root.handlers[:]:
-        logging.root.removeHandler(handler)
+def get_logger(file_name, stdout=False):
+    root = logging.getLogger()
+    root.handlers = []
 
-    os.makedirs(path, exist_ok=True)
+    formatter = logging.Formatter('%(asctime)s - %(name)10s - %(levelname)7s - %(message)s')
+    handlers = []
+    if stdout:
+        handlers.append(logging.StreamHandler(sys.stdout))
 
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s [%(levelname)s] - %(message)s')
-    logger = logging.getLogger(name)
+    handlers.append(logging.FileHandler(filename=f"{file_name}.log"))
+    for handler in handlers:
+        handler.setLevel(logging.INFO)
+        handler.setFormatter(formatter)
+        root.addHandler(handler)
 
-    for handler in logger.root.handlers[:]:
-        logger.root.removeHandler(handler)
-
-    if not logger.hasHandlers():
-        # Create handlers
-        f_handler = logging.FileHandler(os.path.join(path, f"{name}.log"))
-        c_handler = logging.StreamHandler()
-        f_format = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        c_format = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
-        f_handler.setFormatter(f_format)
-        c_handler.setFormatter(c_format)
-
-        # Add handlers to the logger
-        logger.addHandler(c_handler)
-        logger.addHandler(f_handler)
-
-    return logger
-
-
-if __name__ == '__main__':
-    data = base_setting()
-    print(type(data['pricer'].get("port")))
+    root.setLevel(logging.INFO)
+    root.info("+++++++++++++++++++++++++++++++IOT-Agriculture+++++++++++++++++++++++++++++++")
+    root.info(f"logging file location: {file_name}")
+    root.info(f"process started with stdout: {stdout}")
