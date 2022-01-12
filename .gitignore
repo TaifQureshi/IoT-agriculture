@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .idea/
+.build/
+./dist/
+./iot_agriculture.egg-info/
