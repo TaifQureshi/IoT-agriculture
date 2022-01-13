@@ -31,6 +31,6 @@ IoT based agriculture automatic system
    
    2. The  ``--stdout`` is the optional argument. If passed the log output will be printed in terminal
 
-   3. List of services
+   3. List of service_name
       1. ``server``
       2. ``raspberrypi``
