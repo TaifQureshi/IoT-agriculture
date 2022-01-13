@@ -4,10 +4,12 @@ from .base.connection import Connection
 from .base.tcp_server import TcpServer
 from .base.tcp_client import TcpClient
 from .server.server import Server
+from .client.processor import RaspberryPi
 
 __all__ = ["set_logger",
            "base_setting",
            "Connection",
            "TcpServer",
            'TcpClient',
-           "Server"]
+           "Server",
+           "RaspberryPi"]

@@ -6,8 +6,7 @@ from iot_agriculture import Connection
 
 
 class TcpClient(ClFactory):
-    def __init__(self, name: str, log_path: str,
-                 host: str, port: int, callbacks: Dict[str, Callable],
+    def __init__(self, host: str, port: int, callbacks: Dict[str, Callable],
                  *args, **kwargs):
         super(TcpClient, self).__init__(*args, **kwargs)
         self.port = port
@@ -15,7 +14,6 @@ class TcpClient(ClFactory):
         self.callbacks = callbacks
         self.connector = None
         self.logger = logging.getLogger("tcp_client")
-        self.name = name
 
     def start(self):
         self.connector = reactor.connectTCP(
