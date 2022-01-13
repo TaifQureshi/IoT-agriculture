@@ -2,6 +2,7 @@ from twisted.internet import reactor
 from twisted.internet.protocol import ReconnectingClientFactory as ClFactory
 from typing import Dict, Callable
 import logging
+from iot_agriculture import Connection
 
 
 class TcpClient(ClFactory):
@@ -34,4 +35,4 @@ class TcpClient(ClFactory):
 
     def buildProtocol(self, addr):
         self.resetDelay()
-        return Connection(self.callbacks, self.logger, self.name)
+        return Connection(self.callbacks)

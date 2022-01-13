@@ -6,17 +6,16 @@ import logging
 
 
 class TcpServer(ServFactory):
-    def __init__(self, host: str, port: int, log_path: str, name: str, callbacks: dict, *args, **kwargs):
+    def __init__(self, host: str, port: int, callbacks: dict, *args, **kwargs):
         super(TcpServer, self).__init__(*args, **kwargs)
         self.port = port
-        self.name = name
         self.logger = logging.getLogger("tcp_server")
         self.callbacks: Dict[str, Callable] = callbacks
         self.listener = None
         self.host = host
 
     def buildProtocol(self, addr):
-        return Connection(self.callbacks, self.logger, self.name)
+        return Connection(self.callbacks)
 
     def start(self):
         self.listener = reactor.listenTCP(self.port, self)
@@ -24,11 +23,3 @@ class TcpServer(ServFactory):
 
     def stop(self):
         self.listener.stopListening()
-
-
-if __name__ == '__main__':
-    # server = ServerFactory()
-
-    # server.start()
-    # server.startFactory()
-    reactor.run()

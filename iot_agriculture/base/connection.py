@@ -2,14 +2,14 @@ from abc import ABC
 from twisted.internet.protocol import connectionDone
 from twisted.protocols.basic import LineReceiver
 import json
+import logging
 
 
 class Connection(LineReceiver):
-    def __init__(self, callbacks: dict, logger, name: str = "TCP_Connection"):
+    def __init__(self, callbacks: dict):
         super(Connection, self).__init__()
         self.callbacks = callbacks
-        self.logger = logger
-        self.name = name
+        self.logger = logging.getLogger("connection")
 
     def connectionMade(self):
         connect = self.callbacks.get("on_connect")
