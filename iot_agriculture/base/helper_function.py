@@ -11,7 +11,7 @@ def base_setting(base_path="config", setting='base_setting.yml') -> dict:
     return documents
 
 
-def get_logger(file_name, stdout=False):
+def set_logger(file_name, stdout=False):
     root = logging.getLogger()
     root.handlers = []
 
