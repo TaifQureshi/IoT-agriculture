@@ -17,9 +17,12 @@ IoT based agriculture automatic system
     ```shell
       python setup.py install
     ```
+   
+
+5. Change the configurations in config folder as per the requirement 
 
 
-5. To run the program
+6. To run the program
    ```shell
       python run.py service_name --stdout
    ```
