@@ -1,5 +1,6 @@
 from iot_agriculture import TcpClient
 import logging
+from twisted.internet import task
 
 logger = logging.getLogger("raspberry_pi")
 
@@ -14,6 +15,7 @@ class RaspberryPi(object):
                                                "on_disconnect": self.on_disconnect})
 
         self.connection = None
+        self.check_task = task.LoopingCall(self.check)
 
     def on_connect(self, connection):
         logger.info("Connected to server")
@@ -30,8 +32,13 @@ class RaspberryPi(object):
     def start(self):
         logger.info("Tying to connect to server")
         self.tcp_client.start()
+        logger.info(f"Starting the crop status check task with the inter of {self.config.get('interval')}")
+        self.check_task.start(self.config.get("interval"))
 
     def stop(self):
         logger.info("Connection to server terminated")
         logger.info("+++++++++++++++++++++++++++++++IOT-Agriculture+++++++++++++++++++++++++++++++")
         self.tcp_client.stop()
+
+    def check(self):
+        pass

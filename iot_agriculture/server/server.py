@@ -11,7 +11,6 @@ class Server(object):
                                            "on_data": self.on_data,
                                            "on_disconnect": self.on_disconnect})
 
-
     @staticmethod
     def on_connect(connection):
         logger.info(f"New Connection")

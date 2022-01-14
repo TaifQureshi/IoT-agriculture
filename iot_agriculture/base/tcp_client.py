@@ -26,9 +26,15 @@ class TcpClient(ClFactory):
         self.connector.disconnect()
 
     def clientConnectionLost(self, connector, unused_reason):
+        if self.retries > 0:
+            self.logger.info(f"retry attempt : {self.retries}, "
+                             f"next retry in {int(round(self.delay))} seconds")
         self.retry(connector)
 
     def clientConnectionFailed(self, connector, reason):
+        if self.retries > 0:
+            self.logger.info(f"retry attempt : {self.retries}, "
+                             f"next retry in {int(round(self.delay))} seconds")
         self.retry(connector)
 
     def buildProtocol(self, addr):
