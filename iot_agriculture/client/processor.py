@@ -37,7 +37,8 @@ class RaspberryPi(object):
 
     def stop(self):
         logger.info("Connection to server terminated")
-        logger.info("+++++++++++++++++++++++++++++++IOT-Agriculture+++++++++++++++++++++++++++++++")
+        logger.info("Stopping crop monitoring process")
+        logger.info("+++++++++++++++++++++++++++++++IOT-Agriculture+++++++++++++++++++++++++++++++\n")
         self.tcp_client.stop()
 
     def check(self):

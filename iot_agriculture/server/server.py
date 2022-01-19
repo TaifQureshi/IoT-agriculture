@@ -5,8 +5,10 @@ logger = logging.getLogger("Server")
 
 
 class Server(object):
-    def __init__(self, host: str, port: int, *args, **kwargs):
-        self.server = TcpServer(host, port,
+    def __init__(self, config, *args, **kwargs):
+        self.config = config
+        self.server = TcpServer(self.config.get("host"),
+                                self.config.get("port"),
                                 callbacks={"on_connect": self.on_connect,
                                            "on_data": self.on_data,
                                            "on_disconnect": self.on_disconnect})
@@ -30,5 +32,5 @@ class Server(object):
 
     def stop(self):
         logger.info("server stopped")
-        logger.info("+++++++++++++++++++++++++++++++IOT-Agriculture+++++++++++++++++++++++++++++++")
+        logger.info("+++++++++++++++++++++++++++++++IOT-Agriculture+++++++++++++++++++++++++++++++\n")
         self.server.stop()
