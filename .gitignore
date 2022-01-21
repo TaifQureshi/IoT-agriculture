@@ -133,3 +133,4 @@ dmypy.json
 ./dist/
 ./iot_agriculture.egg-info/
 ./logs/
+./test.py

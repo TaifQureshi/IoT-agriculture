@@ -1,9 +1,11 @@
 from iot_agriculture import TcpClient
 import logging
 from twisted.internet import task
-
+from datetime import time, datetime
 logger = logging.getLogger("raspberry_pi")
 
+
+# add stop process before 12 pm daily to update
 
 class RaspberryPi(object):
     def __init__(self, config):
@@ -16,6 +18,7 @@ class RaspberryPi(object):
 
         self.connection = None
         self.check_task = task.LoopingCall(self.check)
+        self.end_time = time(hour=12, minute=1)
 
     def on_connect(self, connection):
         logger.info("Connected to server")
@@ -42,4 +45,9 @@ class RaspberryPi(object):
         self.tcp_client.stop()
 
     def check(self):
-        pass
+        current_time = datetime.now()
+
+        if current_time.hour == self.end_time.hour and current_time.minute == self.end_time.minute:
+            self.stop()
+        else:
+            pass
