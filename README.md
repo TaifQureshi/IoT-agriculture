@@ -34,3 +34,12 @@ IoT based agriculture automatic system
    3. List of service_name
       1. ``server``
       2. ``raspberrypi``
+
+
+# RaspberryPi Setting
+
+1. user: pi
+2. password: Taif@123 default: raspberry
+3. ip: raspberrypi
+
+ssh: ``ssh pi@raspberrypi``
