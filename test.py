@@ -8,5 +8,5 @@ while True:
     print("taking temp")
     humidity, temperature = Adafruit_DHT.read_retry(sensor, 4)
 
-    print('Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(temperature, humidity))
+    print(f'Temp: {temperature} C  Humidity: {humidity} %')
     time.sleep(1)
