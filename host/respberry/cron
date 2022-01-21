@@ -1,0 +1,12 @@
+SCRIPTS_DIR=/home/pi/IoT-agriculture/host/respberry
+
+# on reboot
+@reboot source ~/.bashrc; ${SCRIPTS_DIR}/reboot_script.sh;
+
+
+# check for git update
+00 12 * * * source ~/.bashrc; ${SCRIPTS_DIR};
+
+# restart the process
+
+02 12 * * * source ~/.bashrc; ${SCRIPTS_DIR}/reboot_script.sh;

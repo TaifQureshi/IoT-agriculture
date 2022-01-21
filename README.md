@@ -59,7 +59,7 @@ Steps to Follow-on setting up the RaspberryPi
          sudo apt-get install cron
       ```
    2. ```shell
-        crontab cron
+        crontab /home/pi/IoT-agriculture/host/respberry/cron
       ```
 8. Start the script for the pi
    1. ```shell
