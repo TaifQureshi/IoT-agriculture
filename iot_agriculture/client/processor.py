@@ -2,6 +2,7 @@ from iot_agriculture import TcpClient
 import logging
 from twisted.internet import task
 from datetime import time, datetime
+import RPi.GPIO as GPIO
 logger = logging.getLogger("raspberry_pi")
 
 
@@ -19,6 +20,9 @@ class RaspberryPi(object):
         self.connection = None
         self.check_task = task.LoopingCall(self.check)
         self.end_time = time(hour=12, minute=1)
+
+    def config_gpio(self):
+        pass
 
     def on_connect(self, connection):
         logger.info("Connected to server")
