@@ -10,3 +10,19 @@
 #
 #     print(f'Temp: {temperature} C  Humidity: {humidity} %')
 #     time.sleep(3)
+
+import RPi.GPIO as GPIO
+import time
+
+pin = 21
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(pin, GPIO.IN)
+
+while True:
+    if GPIO.input(pin):
+        print("water detected")
+    else:
+        print("no water")
+
+    time.sleep(1)
