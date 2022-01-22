@@ -6,7 +6,7 @@ IoT based agriculture automatic system
 1. user: pi
 2. password: Taif@123 default: raspberry
 3. ip: raspberrypi
-4. ping resberrypi.local
+4. ping raspberrypi.local
 
 ssh: ``ssh pi@raspberrypi``
 
@@ -50,6 +50,10 @@ Steps to Follow-on setting up the RaspberryPi
          git clone https://github.com/adafruit/Adafruit_Python_DHT.git
          
          cd ~/Adafruit_Python_DHT
+         
+         sudo apt-get update
+         
+         sudo apt-get install build-essential python-dev
          
          sudo python setup.py install
          ```
