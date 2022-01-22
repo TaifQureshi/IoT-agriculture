@@ -3,6 +3,8 @@ import logging
 from twisted.internet import task
 from datetime import time, datetime
 import RPi.GPIO as GPIO
+from iot_agriculture.client import Light
+
 logger = logging.getLogger("raspberry_pi")
 
 
@@ -20,9 +22,12 @@ class RaspberryPi(object):
         self.connection = None
         self.check_task = task.LoopingCall(self.check)
         self.end_time = time(hour=12, minute=1)
+        self.light_sensor = Light(self.config)
 
     def config_gpio(self):
-        pass
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        self.light_sensor.set_sensor()
 
     def on_connect(self, connection):
         logger.info("Connected to server")
@@ -54,4 +59,4 @@ class RaspberryPi(object):
         if current_time.hour == self.end_time.hour and current_time.minute == self.end_time.minute:
             self.stop()
         else:
-            pass
+            light = self.light_sensor.light_status()

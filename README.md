@@ -44,6 +44,10 @@ Steps to Follow-on setting up the RaspberryPi
 4. Install package
    1. ```shell
         sudo apt install python3-pip -y
+      
+        sudo apt-get install pigpio python-pigpio python3-pigpio
+      
+        sudo pigpiod
       ```
    2. Install package
       1. ```shell
