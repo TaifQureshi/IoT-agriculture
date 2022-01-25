@@ -56,4 +56,10 @@ def controal():
 GPIO.add_event_detect(sensor, GPIO.BOTH, bouncetime=300)
 GPIO.add_event_callback(sensor, controal)
 
+while True:
+    try:
+        time.sleep(1)
+    except KeyboardInterrupt:
+        break
+
 GPIO.cleanup()
