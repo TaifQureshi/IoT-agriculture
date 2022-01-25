@@ -15,7 +15,8 @@ import RPi.GPIO as GPIO
 import time
 
 
-pin = 21
+pin = 23
+pin1 = 24
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 # GPIO.setup(pin, GPIO.IN)
@@ -29,10 +30,12 @@ GPIO.setwarnings(False)
 #     time.sleep(1)
 
 GPIO.setup(pin, GPIO.OUT)
-
+GPIO.setup(pin1, GPIO.OUT)
 print("motor start")
-GPIO.output(pin, True)
-time.sleep(5)
+GPIO.output(pin1, GPIO.HIGH)
+GPIO.output(pin, GPIO.LOW)
+input()
 print("motor stop")
-GPIO.output(pin, False)
+GPIO.output(pin1, GPIO.LOW)
+GPIO.output(pin, GPIO.LOW)
 GPIO.cleanup()
