@@ -13,16 +13,26 @@
 
 import RPi.GPIO as GPIO
 import time
-
+#
 pin = 21
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-GPIO.setup(pin, GPIO.IN)
+# GPIO.setup(pin, GPIO.IN)
+#
+# while True:
+#     if not GPIO.input(pin):
+#         print("water detected")
+#     else:
+#         print("no water")
+#
+#     time.sleep(1)
 
-while True:
-    if GPIO.input(pin):
-        print("water detected")
-    else:
-        print("no water")
+GPIO.setup(pin, GPIO.OUT)
+GPIO.output(pin, False)
+time.sleep(0.1)
+print("motor start")
+GPIO.output(pin, True)
+time.sleep(5)
+print("motor stop")
+GPIO.output(pin, False)
 
-    time.sleep(1)
