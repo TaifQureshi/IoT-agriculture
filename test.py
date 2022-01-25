@@ -13,8 +13,24 @@
 
 import RPi.GPIO as GPIO
 import time
+
+
 #
-pin = 21
+
+
+def loop():
+    # Going forwards
+    GPIO.output(Motor1A, GPIO.HIGH)
+    GPIO.output(Motor1B, GPIO.LOW)
+
+
+def stop():
+    GPIO.output(Motor1A, GPIO.LOW)
+    GPIO.output(Motor1B, GPIO.LOW)
+
+
+Motor1A = 20
+Motor1B = 21
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 # GPIO.setup(pin, GPIO.IN)
@@ -27,12 +43,12 @@ GPIO.setwarnings(False)
 #
 #     time.sleep(1)
 
-GPIO.setup(pin, GPIO.OUT)
-GPIO.output(pin, False)
-time.sleep(0.1)
-print("motor start")
-GPIO.output(pin, True)
-time.sleep(5)
-print("motor stop")
-GPIO.output(pin, False)
+GPIO.setup(Motor1A, GPIO.OUT)
+GPIO.setup(Motor1B, GPIO.OUT)
 
+print("motor start")
+loop()
+input()
+print("motor stop")
+stop()
+GPIO.clean()
