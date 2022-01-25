@@ -2,3 +2,11 @@ host: localhost
 port: 8080
 interval: 1
 light_sensor: 4
+water_sensor: 25
+# pin2 of motor drive
+motor1: 24
+# pin7 of motor drive
+motot2: 23
+unique_id: jySDEMp4ZY
+send_data: 60 * 5
+heart_beat: 30
