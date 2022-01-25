@@ -14,9 +14,9 @@
 import RPi.GPIO as GPIO
 import time
 
-
 pin = 23
 pin1 = 24
+sensor = 4
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 # GPIO.setup(pin, GPIO.IN)
@@ -31,11 +31,29 @@ GPIO.setwarnings(False)
 
 GPIO.setup(pin, GPIO.OUT)
 GPIO.setup(pin1, GPIO.OUT)
-print("motor start")
-GPIO.output(pin1, GPIO.HIGH)
-GPIO.output(pin, GPIO.LOW)
-input()
-print("motor stop")
-GPIO.output(pin1, GPIO.LOW)
-GPIO.output(pin, GPIO.LOW)
+GPIO.setup(sensor, GPIO.IN)
+
+
+def start():
+    GPIO.output(pin1, GPIO.HIGH)
+    GPIO.output(pin, GPIO.LOW)
+
+
+def stop():
+    GPIO.output(pin1, GPIO.LOW)
+    GPIO.output(pin, GPIO.LOW)
+
+
+def controal():
+    if GPIO.input(sensor):
+        print("stop motor")
+        stop()
+    else:
+        print("start motor")
+        start()
+
+
+GPIO.add_event_detect(sensor, GPIO.BOTH, bouncetime=300)
+GPIO.add_event_callback(sensor, controal)
+
 GPIO.cleanup()
