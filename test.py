@@ -44,8 +44,8 @@ def stop():
     GPIO.output(pin, GPIO.LOW)
 
 
-def controal():
-    if GPIO.input(sensor):
+def controal(channel):
+    if GPIO.input(channel):
         print("stop motor")
         stop()
     else:
