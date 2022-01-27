@@ -3,4 +3,5 @@ Twisted~=21.7.0
 PyYAML~=6.0
 jsons~=1.6.1
 python-telegram-bot==13.10
-psycopg2
+psycopg2~=2.9.3
+pid~=3.0.4
