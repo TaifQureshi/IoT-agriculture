@@ -20,9 +20,9 @@ class Server(object):
                                            "on_disconnect": self.on_disconnect})
 
         self.db = DbConnection(self.config.get("db"))
-        self.db_data = []
         self.chat_ids = {'ids': self.config.get("ids")}
         self.heart_beat_time = None
+        self.db_data = []
         self.heart_beat_task = task.LoopingCall(self.heart_beat)
         self.heart_beat_interval = int(self.config.get("heart_beat"))
         self.bot = TelegramBot(self.config.get("token"))
@@ -87,19 +87,27 @@ class Server(object):
     def on_data(self, connection, data):
         header = Header.de_json(data)
         data = header.payload
+
+        # handle sensor data
         if header.payload_type == "SensorData":
             resp = Responce(header.uuid)
             resp_header = Header("Responce", resp)
             connection.send_data(resp_header.to_json())
-            self.db_data.append(data.to_db())
-            if len(self.db_data) > 10:
-                data = self.db_data
-                self.db_data = []
-                self.insert_to_db(data)
+            self.insert_to_db(data)
+            if len(self.db_data) > 5:
+                remove = []
+                for query in self.db_data:
+                    status = self.db.commit_query(query)
+                    if status:
+                        remove.append(query)
+                for q in remove:
+                    self.db_data.remove(q)
 
+        # handle heartbeat
         elif header.payload_type == "HeartBeat":
             self.heart_beat_time = datetime.now()
 
+        # handle logout request
         elif header.payload_type == "Logout":
             self.heart_beat_time = None
             text = "<b>Raspberry pi send logout request</b>\n" \
@@ -147,12 +155,6 @@ class Server(object):
         self.server.stop()
 
     def insert_to_db(self, data):
-        query = "insert into sensor_data (client_id,light,water,time,last_water) VALUES "
-        q = ','.join(data)
-        query = query + q + ';'
-        logger.info(query)
-        status = self.db.commit_query(query)
-        if status:
-            logger.info("Insert success full")
-        else:
-            self.db_data.extend(data)
+        status = self.db.commit_query(data.to_db())
+        if not status:
+            self.db_data.append(data.to_db())
