@@ -112,13 +112,14 @@ Open port 8080 on aws server
       sudo apt install git -y
       ```
    
-   Set up the profile
-   2. ```shell
-      git config --global user.name "Your Name"
+   
+   2. Set up the profile
+      ```shell
+        git config --global user.name "Your Name"
       
-      git config --global user.email "youremail@domain.com"
+        git config --global user.email "youremail@domain.com"
       
-      git config --global user.password "your password"
+        git config --global user.password "your password"
       ```
       
 3. Pull the code
