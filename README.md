@@ -91,6 +91,8 @@ Steps to Follow-on setting up the RaspberryPi
 
 # AWS server setting
 
+ip: 3.110.166.9
+
 # Data base setting
 1. host: localhost
 2. port: 5432
