@@ -16,5 +16,5 @@ if __name__ == "__main__":
     model = importlib.import_module(program, package=None)
     config_location = os.getcwd() + '/config'
     config = base_setting(config_location, "base.yml")
-    set_logger(f"{config.get('logger_path')}/{inputs[0]}", stdout=stdout)
+    set_logger(f"{os.getcwd()}/{config.get('logger_path')}/{inputs[0]}", stdout=stdout)
     runner = getattr(model, inputs[0])(inputs, config_location)
