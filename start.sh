@@ -6,4 +6,4 @@ if [[ -z ${name} ]]; then
     exit 1
 fi
 
-nohup python3 run.py "${name}"
+nohup python3 run.py "${name}" >> /temp/"${name}".nohup.out;

@@ -155,6 +155,11 @@ Open port 8080 on aws server
       ```shell
          ALTER USER postgres PASSWORD '<new-password>';
       ```
+      
+7. Run the server code
+   1. ```shell
+         nohup python3 run.py server >> /tmp/server.nohup.out;
+      ```
 
 
 
