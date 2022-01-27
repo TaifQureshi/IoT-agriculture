@@ -27,6 +27,7 @@ class Server(object):
         self.heart_beat_interval = int(self.config.get("heart_beat"))
         self.bot = TelegramBot(self.config.get("token"))
         self.set_commands()
+        self.count = 0
 
     def set_commands(self):
         self.bot.add_command([("help", "help function"), ("start", "Start function"),
@@ -110,6 +111,7 @@ class Server(object):
         # handle heartbeat
         elif header.payload_type == "HeartBeat":
             self.heart_beat_time = datetime.now()
+            self.count = 0
 
         # handle logout request
         elif header.payload_type == "Logout":
@@ -121,10 +123,11 @@ class Server(object):
                                           text=text,
                                           parse_mode=ParseMode.HTML)
 
-    @staticmethod
-    def on_disconnect(connection, reason):
+    def on_disconnect(self, connection, reason):
         logger.info("Client disconnected")
         logger.info(reason)
+        self.heart_beat_time = None
+        self.count = 0
 
     def heart_beat(self):
         now = datetime.now()
@@ -138,6 +141,10 @@ class Server(object):
                     self.bot.bot.send_message(chat_id=ids,
                                               text=text,
                                               parse_mode=ParseMode.HTML)
+
+                if self.count > 15:
+                    self.heart_beat_time = None
+                self.count += 1
 
     def start(self):
         logger.info("Connect to db")
