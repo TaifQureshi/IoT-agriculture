@@ -22,16 +22,16 @@ Steps to Follow-on setting up the RaspberryPi
       
 2. Install git and setup profile
    1. ```shell
-      sudo apt install git -y
+        sudo apt install git -y
       ```
    
    Set up the profile
    2. ```shell
-      git config --global user.name "Your Name"
+        git config --global user.name "Your Name"
       
-      git config --global user.email "youremail@domain.com"
+        git config --global user.email "youremail@domain.com"
       
-      git config --global user.password "your password"
+        git config --global user.password "your password"
       ```
       
 3. Pull the code
