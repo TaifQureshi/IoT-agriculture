@@ -2,7 +2,7 @@ from iot_agriculture import TcpClient, SensorData, HeartBeat, Header, Logout
 import logging
 from twisted.internet import task
 from datetime import time, datetime
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from iot_agriculture.client import Light
 from iot_agriculture.client import WaterController
 
@@ -30,16 +30,16 @@ class RaspberryPi(object):
         self.light_sensor = Light(self.config)
         self.last_water = None
         self.water_controller = WaterController(self.config)
-        # self.config_gpio()
+        self.config_gpio()
         self.water = False
         self.light = False
         self.data_status = {}
 
-    # def config_gpio(self):
-    #     GPIO.setmode(GPIO.BCM)
-    #     GPIO.setwarnings(False)
-    #     self.light_sensor.set_sensor()
-    #     self.water_controller.set_sensor()
+    def config_gpio(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        self.light_sensor.set_sensor()
+        self.water_controller.set_sensor()
 
     def on_connect(self, connection):
         logger.info("Connected to server")
@@ -67,7 +67,7 @@ class RaspberryPi(object):
         logger.info(f"Send data to server at interval of {self.config.get('send_data')} minutes")
         self.water_controller.start()
         self.check_task.start(int(self.config.get("interval")))
-        self.send_data_task.start(int(self.config.get("send_data")))
+        self.send_data_task.start(int(self.config.get("send_data"))*60)
         self.heart_beat_task.start(int(self.config.get("heart_beat")))
 
     def stop(self):
