@@ -36,12 +36,14 @@ class Server(object):
         self.bot.set_command("start", self.bot_start)
         self.bot.set_command("status", self.bot_status)
 
-    @staticmethod
-    def bot_help(update, context):
+    def bot_help(self, update, context):
+        self.chat_ids['ids'].add(update.message.chat.id)
+
         text = "<b>Help Command</b>           \n\n" \
                "/help: help function            \n" \
                "/start: Start the bot           \n" \
                "/status: Real time sensor value \n"
+
         context.bot.send_message(
             chat_id=update.message.chat.id,
             text=text,
@@ -61,6 +63,8 @@ class Server(object):
         file.close()
 
     def bot_status(self, update, context):
+        self.chat_ids['ids'].add(update.message.chat.id)
+
         queue = "SELECT * FROM public.sensor_data order by time DESC limit 1;"
 
         status = self.db.commit_query(queue)
