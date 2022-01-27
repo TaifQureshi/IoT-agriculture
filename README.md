@@ -19,14 +19,15 @@ Steps to Follow-on setting up the RaspberryPi
    2. ```shell
        sudo apt-get upgrade -y
       ```
-      
+
 2. Install git and setup profile
    1. ```shell
         sudo apt install git -y
       ```
    
-   Set up the profile
-   2. ```shell
+   
+   2. Set up the profile
+      ```shell
         git config --global user.name "Your Name"
       
         git config --global user.email "youremail@domain.com"
