@@ -134,3 +134,4 @@ dmypy.json
 ./iot_agriculture.egg-info/
 ./logs/
 ./test.py
+iot_project.pem
