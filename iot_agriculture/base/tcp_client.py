@@ -16,6 +16,7 @@ class TcpClient(ClFactory):
         self.logger = logging.getLogger("tcp_client")
 
     def start(self):
+        self.logger.info(f"Connection to {self.host}:{self.port}")
         self.connector = reactor.connectTCP(
             self.host,
             self.port,
