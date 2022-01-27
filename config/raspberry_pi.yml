@@ -1,4 +1,4 @@
-host: localhost
+host: 3.110.166.9
 port: 8080
 # check interval in sec
 interval: 1
