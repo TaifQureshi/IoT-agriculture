@@ -6,4 +6,4 @@ RUN_PATH='/home/pi/IoT-agriculture/'
 # start the client
 cd ${RUN_PATH};
 
-nohup python run.py raspberrypi;
+nohup python3 run.py raspberrypi;

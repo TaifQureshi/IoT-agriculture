@@ -1,4 +1,4 @@
-SCRIPTS_DIR=/home/pi/IoT-agriculture/host/respberry
+SCRIPTS_DIR=/home/ubuntu/IoT-agriculture/host/aws
 
 # on reboot
 @reboot source ~/.bashrc; ${SCRIPTS_DIR}/reboot_script.sh;

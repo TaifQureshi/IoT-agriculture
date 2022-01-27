@@ -93,6 +93,71 @@ Steps to Follow-on setting up the RaspberryPi
 
 ip: 3.110.166.9
 
+Open port 8080 on aws server
+
+
+1. Update and upgrade
+   1. ```shell
+       sudo apt-get update -y
+      ```
+   2. ```shell
+       sudo apt-get upgrade -y
+      
+      sudo apt install libpq-dev python3-dev
+      ```
+      
+2. Install git and setup profile
+   1. ```shell
+      sudo apt install git -y
+      ```
+   
+   Set up the profile
+   2. ```shell
+      git config --global user.name "Your Name"
+      
+      git config --global user.email "youremail@domain.com"
+      
+      git config --global user.password "your password"
+      ```
+      
+3. Pull the code
+   1. ```shell
+       cd ~
+       
+       git clone https://github.com/TaifQureshi/IoT-agriculture.git      
+      ```
+   
+4. Install all the required packages.
+   1. Run the command in the repository folder
+   
+   2. ```shell
+         pip install -r requirements.txt 
+      ```
+
+5. Run the following command to install the ``iot_agriculture`` package
+    ```shell
+      python setup.py install
+    ```
+   
+6. Install postgres
+   1. ```shell
+         sudo apt install postgresql postgresql-contrib -y
+      ```
+   
+   2. Switch user
+      ```shell
+         sudo -i -u postgres
+         
+         psql
+      ```
+   
+   3. Setpassword
+      ```shell
+         ALTER USER postgres PASSWORD '<new-password>';
+      ```
+
+
+
 # Data base setting
 1. host: localhost
 2. port: 5432
