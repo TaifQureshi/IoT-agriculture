@@ -1,5 +1,6 @@
 host: localhost
 port: 8080
+# check interval in sec
 interval: 1
 light_sensor: 4
 water_sensor: 25
@@ -8,5 +9,7 @@ motor1: 24
 # pin7 of motor drive
 motot2: 23
 unique_id: jySDEMp4ZY
-send_data: 60 * 5
+# send data to server in min
+send_data: 1
+# send heartbeat to server in sec
 heart_beat: 30

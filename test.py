@@ -1,65 +1,17 @@
-# import sys
-# import Adafruit_DHT
-# import time
-#
-#
-# sensor = Adafruit_DHT.DHT11
-# while True:
-#     print("taking temp")
-#     humidity, temperature = Adafruit_DHT.read(sensor, 26)
-#
-#     print(f'Temp: {temperature} C  Humidity: {humidity} %')
-#     time.sleep(3)
+from iot_agriculture.server import DbConnection
+from iot_agriculture import Config, set_logger, base_setting
+import os
 
-import RPi.GPIO as GPIO
-import time
+location = os.getcwd() + '\\config'
+config = base_setting(location, "base.yml")
+set_logger(f"{config.get('logger_path')}/test", stdout=True)
+config = Config(location)
+config.add_config(['server.yml'])
 
-pin = 23
-pin1 = 24
-sensor = 4
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-# GPIO.setup(pin, GPIO.IN)
-#
-# while True:
-#     if not GPIO.input(pin):
-#         print("water detected")
-#     else:
-#         print("no water")
-#
-#     time.sleep(1)
-
-GPIO.setup(pin, GPIO.OUT)
-GPIO.setup(pin1, GPIO.OUT)
-GPIO.setup(sensor, GPIO.IN)
-
-
-def start():
-    GPIO.output(pin1, GPIO.HIGH)
-    GPIO.output(pin, GPIO.LOW)
-
-
-def stop():
-    GPIO.output(pin1, GPIO.LOW)
-    GPIO.output(pin, GPIO.LOW)
-
-
-def controal(channel):
-    if GPIO.input(channel):
-        print("stop motor")
-        stop()
-    else:
-        print("start motor")
-        start()
-
-
-GPIO.add_event_detect(sensor, GPIO.BOTH, bouncetime=300)
-GPIO.add_event_callback(sensor, controal)
-
-while True:
-    try:
-        time.sleep(1)
-    except KeyboardInterrupt:
-        break
-
-GPIO.cleanup()
+db = DbConnection(config.get("db"))
+connect = db.connect()
+if connect:
+    print("connected")
+    query = "Insert I"
+else:
+    print("not connected")

@@ -1,2 +1,10 @@
 host: localhost
 port: 8080
+heart_beat: 40
+token: 1914529325:AAH4dPy4TOtLsXW9mXjNmnXrd6bkuFdP1I4
+db:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: Taif@123
+  database: iot_data

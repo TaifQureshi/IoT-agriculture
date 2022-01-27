@@ -90,3 +90,28 @@ Steps to Follow-on setting up the RaspberryPi
       
 
 # AWS server setting
+
+# Data base setting
+1. host: localhost
+2. port: 5432
+3. user: postgres
+4. password: Taif@123
+5. database: iot_data
+
+psql script
+
+```sql
+
+CREATE DATABASE iot_data;
+
+\c iot_data
+
+CREATE TABLE IF NOT EXISTS sensor_data (
+	client_id character varying(15) COLLATE pg_catalog."default",
+	light BOOLEAN,
+	water BOOLEAN,
+	time timestamp NOT NULL,
+	last_water timestamp NOT NULL	
+);
+
+```
