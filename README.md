@@ -86,7 +86,7 @@ Steps to Follow-on setting up the RaspberryPi
       ```
 9. Start the script for the pi
    1. ```shell
-         python run.py raspberrypi
+         nohup python3 run.py raspberrypi >> /tmp/raspberrypi.nohup.out
       ```
       
 
