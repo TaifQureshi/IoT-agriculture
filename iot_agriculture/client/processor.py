@@ -2,7 +2,7 @@ from iot_agriculture import TcpClient, SensorData, HeartBeat, Header, Logout
 import logging
 from twisted.internet import task
 from datetime import time, datetime
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from iot_agriculture.client import Light
 from iot_agriculture.client import WaterController
 
@@ -22,11 +22,9 @@ class RaspberryPi(object):
 
         self.connection = None
         self.unique_id = self.config.get("unique_id")
-        self.check_task = task.LoopingCall(self.check)
         self.send_data_task = task.LoopingCall(self.send_data)
         self.heart_beat_task = task.LoopingCall(self.heart_beat)
         self.count = 0
-        self.end_time = time(hour=12, minute=1)
         self.light_sensor = Light(self.config)
         self.last_water = None
         self.water_controller = WaterController(self.config)
@@ -35,11 +33,11 @@ class RaspberryPi(object):
         self.light = False
         self.data_status = {}
 
-    # def config_gpio(self):
-    #     GPIO.setmode(GPIO.BCM)
-    #     GPIO.setwarnings(False)
-    #     self.light_sensor.set_sensor()
-    #     self.water_controller.set_sensor()
+    def config_gpio(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        self.light_sensor.set_sensor()
+        self.water_controller.set_sensor()
 
     def on_connect(self, connection):
         logger.info("Connected to server")
@@ -66,7 +64,6 @@ class RaspberryPi(object):
         logger.info(f"Starting the crop status check task with the interval of {self.config.get('interval')} second")
         logger.info(f"Send data to server at interval of {self.config.get('send_data')} minutes")
         self.water_controller.start()
-        self.check_task.start(int(self.config.get("interval")))
         self.send_data_task.start(int(self.config.get("send_data"))*60)
         self.heart_beat_task.start(int(self.config.get("heart_beat")))
 
@@ -79,18 +76,11 @@ class RaspberryPi(object):
         self.connection.send_data(header.to_json())
         logger.info("+++++++++++++++++++++++++++++++IOT-Agriculture+++++++++++++++++++++++++++++++\n")
         self.tcp_client.stop()
-        # GPIO.cleanup()
-
-    def check(self):
-        current_time = datetime.now()
-
-        if current_time.hour == self.end_time.hour and current_time.minute == self.end_time.minute:
-            self.stop()
-        else:
-            self.light = self.light_sensor.light_status()
-            self.water, self.last_water = self.water_controller.water_status()
+        GPIO.cleanup()
 
     def send_data(self):
+        self.light = self.light_sensor.light_status()
+        self.water, self.last_water = self.water_controller.water_status()
         time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         data = SensorData(light=self.light, water=self.water, client_id=self.unique_id, time=time,
                           last_water=self.last_water)

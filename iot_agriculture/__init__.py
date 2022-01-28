@@ -10,7 +10,6 @@ from .base.heart_beat import HeartBeat
 from .base.header import Header
 from .base.responce import Responce
 from .base.logout import Logout
-from .client.processor import RaspberryPi
 from .server.server import Server
 
 __all__ = ["set_logger",
@@ -25,6 +24,5 @@ __all__ = ["set_logger",
            'Header',
            'Responce',
            'Logout',
-           "RaspberryPi",
            "Server",]
 
