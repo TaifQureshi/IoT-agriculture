@@ -8,6 +8,8 @@ class SensorData(Payload):
                  water: bool = None,
                  time: str = None,
                  last_water=None,
+                 temperature=None,
+                 humidity=None,
                  *args,
                  **kwargs):
         super(SensorData, self).__init__(*args, **kwargs)
@@ -16,7 +18,9 @@ class SensorData(Payload):
         self.water = water
         self.time = time
         self.last_water = last_water
+        self.temperature = temperature
+        self.humidity = humidity
 
     def to_db(self):
         return f"INSERT INTO sensor_data (client_id,light,water,time,last_water) VALUES " \
-               f"('{self.client_id}', {self.light}, {self.water}, '{self.time}', '{self.last_water}');"
+               f"('{self.client_id}', {self.light}, {self.water}, '{self.time}', '{self.last_water}', '{self.temperature}, {self.humidity}');"

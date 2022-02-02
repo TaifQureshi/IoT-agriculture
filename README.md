@@ -185,7 +185,9 @@ CREATE TABLE IF NOT EXISTS sensor_data (
 	light BOOLEAN,
 	water BOOLEAN,
 	time timestamp NOT NULL,
-	last_water timestamp NOT NULL	
+	last_water timestamp NOT NULL,
+	temperature real,
+	humidity real 
 );
 
 ```

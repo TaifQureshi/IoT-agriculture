@@ -3,8 +3,7 @@ import logging
 from twisted.internet import task
 from datetime import time, datetime
 import RPi.GPIO as GPIO
-from iot_agriculture.client import Light
-from iot_agriculture.client import WaterController
+from iot_agriculture.client import WaterController, Light, Temperature
 
 logger = logging.getLogger("raspberry_pi")
 
@@ -26,11 +25,9 @@ class RaspberryPi(object):
         self.heart_beat_task = task.LoopingCall(self.heart_beat)
         self.count = 0
         self.light_sensor = Light(self.config)
-        self.last_water = None
         self.water_controller = WaterController(self.config)
-        # self.config_gpio()
-        self.water = False
-        self.light = False
+        self.temp_sensor = Temperature(self.config)
+        self.config_gpio()
         self.data_status = {}
 
     def config_gpio(self):
@@ -38,6 +35,7 @@ class RaspberryPi(object):
         GPIO.setwarnings(False)
         self.light_sensor.set_sensor()
         self.water_controller.set_sensor()
+        self.temp_sensor.set_sensor()
 
     def on_connect(self, connection):
         logger.info("Connected to server")
@@ -79,11 +77,12 @@ class RaspberryPi(object):
         GPIO.cleanup()
 
     def send_data(self):
-        self.light = self.light_sensor.light_status()
-        self.water, self.last_water = self.water_controller.water_status()
+        light = self.light_sensor.light_status()
+        water, last_water = self.water_controller.water_status()
         time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-        data = SensorData(light=self.light, water=self.water, client_id=self.unique_id, time=time,
-                          last_water=self.last_water)
+        humi, temp = self.temp_sensor.get_temp()
+        data = SensorData(light=light, water=water, client_id=self.unique_id, time=time,
+                          last_water=last_water, temperature=round(temp, 3), humidity=round(humi, 3))
         header = Header("SensorData", data)
         self.data_status[header.uuid] = header
         if self.connection:

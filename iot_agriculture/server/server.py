@@ -76,6 +76,8 @@ class Server(object):
                    f"Client id: {data.client_id} \n" \
                    f"Light condition: {data.light}\n" \
                    f"Water: {data.water}\n" \
+                   f"temperature: {data.temperature}\n" \
+                   f"Humidity: {data.humidity}\n" \
                    f"Last water supplied time: {data.last_water}\n"
         else:
             text = "Some thing went wrong in server"
