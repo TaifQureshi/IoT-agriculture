@@ -22,5 +22,6 @@ class SensorData(Payload):
         self.humidity = humidity
 
     def to_db(self):
-        return f"INSERT INTO sensor_data (client_id,light,water,time,last_water) VALUES " \
-               f"('{self.client_id}', {self.light}, {self.water}, '{self.time}', '{self.last_water}', '{self.temperature}, {self.humidity}');"
+        return f"INSERT INTO sensor_data (client_id,light,water,time,last_water,temperature,humidity) VALUES " \
+               f"('{self.client_id}', {self.light}, {self.water}, '{self.time}', '{self.last_water}', " \
+               f"{self.temperature}, {self.humidity});"
